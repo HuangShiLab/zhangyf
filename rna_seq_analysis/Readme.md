@@ -60,10 +60,10 @@ mkdir -p ${output_dir}
 bowtie2 -x ${bowtie2_index} -1 ${input_dir}/trimmed_${sample_name}_R1.fastq.gz -2 ${input_dir}/trimmed_${sample_name}_R2.fastq.gz -S ${output_dir}/${sample_name}.sam -p 10
 ```
 Note:  
-In this project, the reference database is as follows:
-Species: Staphylococcus aureus
-Version: NC_007793.1
-Origin: NCBI
+In this project, the reference database is as follows:  
+Species: Staphylococcus aureus  
+Version: NC_007793.1  
+Origin: NCBI  
 Download link: https://www.ncbi.nlm.nih.gov/nuccore/NC_007793.1[https://www.ncbi.nlm.nih.gov/nuccore/NC_007793.1]
 
 ### 3. Expression analysis
