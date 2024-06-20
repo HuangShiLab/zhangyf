@@ -11,6 +11,7 @@ While performing microbiome data analysis, we collect microbiome samples and ext
 
 ## Transcriptome data analysis workflow
 <img width="965" alt="image" src="https://github.com/HuangShiLab/zhangyf/assets/170502144/0aa4f270-751f-453e-846a-6cf8015b5d64">
+
 The main workflow of transcriptome data analysis contains five steps.
 
 ### 1. Quanlity control
@@ -125,3 +126,7 @@ awk '$3 == "exon" {print $1, $4, $5}' ${input_dir}/${sample_name}_assembled_tran
 
 3.6 Combine count of total exon fragments, count of mapped reads, and exon length for FPKM Calculation
 <img width="421" alt="Screenshot 2024-06-13 at 15 05 56" src="https://github.com/HuangShiLab/zhangyf/assets/170502144/ede22a26-9612-4cbd-9170-df70fe52c606">
+
+## 4. Quality assessment
+
+## 5. Differentially expressed genes (DEGs) analysis
