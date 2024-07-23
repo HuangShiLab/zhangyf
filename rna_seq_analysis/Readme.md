@@ -127,6 +127,4 @@ mkdir -p ${output_dir}
 Rscript merge.R -i ${input_file} -c ${input_dir1} -f ${input_dir2} -o ${output_dir}/gene_expression_result.txt
 ```
 
-## 4. Quality assessment
-
-## 5. Differentially expressed genes (DEGs) analysis
+## 4. Differentially expressed genes (DEGs) analysis
