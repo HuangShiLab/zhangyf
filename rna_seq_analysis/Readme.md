@@ -91,7 +91,7 @@ output_dir=${outdir}/stringtie
 stringtie -p 8 -o ${output_dir}/${sample_name}_assembled_transcripts.gtf ${input_dir}/${sample_name}_sorted.bam
 ```
 
-3.3 Calculate Total Exon Fragments
+3.3 Assemble RNA-Seq alignments into potential transcripts
 * Software: HTSeq 2.0.7  
 * Input data: sorted sam file; assembled transcripts file in gtf format  
 * Commands:  
@@ -103,29 +103,29 @@ mkdir -p ${output_dir}
 htseq-count -f bam -s no -r pos ${input_dir1}/${sample_name}_sorted.sam ${input_dir2}/${sample_name}_assembled_transcripts.gtf > ${output_dir}/${sample_name}_counts.txt
 ```
 
-3.4 Count Mapped Reads [Millions]  
-* Software: samtools 1.17-25-geb3be52  
-* Input data: sorted bam file 
-* Commands:
-```
-input_dir=${outdir}/bowtie2
-output_dir=${outdir}/mapped_reads_count
-mkdir -p ${output_dir}
-samtools view -c -F 260 ${input_dir}/${sample_name}_sorted.bam > ${output_dir}/${sample_name}_mapped_reads_count.txt
-```
-
-3.5 Calculate Exon Length [KB]  
-* Input data: assembled transcripts file in gtf format  
+3.4 Manage the FPKM results
+* Software: a python script write by ourselves (FPKM.py)
+* Input data: assembled transcripts file in gtf format
 * Commands:
 ```
 input_dir=${outdir}/stringtie
-output_dir=${outdir}/exon_length
+output_dir=${outdir}/FPKM
 mkdir -p ${output_dir}
-awk '$3 == "exon" {print $1, $4, $5}' ${input_dir}/${sample_name}_assembled_transcripts.gtf | awk '{sum += $3 - $2 + 1} END {print sum/1000}' > ${output_dir}/${sample_name}_exon_length.txt
+python FPKM.py ${inputdir}/${sample_name}_assembled_transcripts.gtf ${output_dir}/${sample_name}_FPKM.txt
 ```
 
-3.6 Combine count of total exon fragments, count of mapped reads, and exon length for FPKM Calculation
-<img width="421" alt="Screenshot 2024-06-13 at 15 05 56" src="https://github.com/HuangShiLab/zhangyf/assets/170502144/ede22a26-9612-4cbd-9170-df70fe52c606">
+3.5 Merge the results of potential transcripts count and FPKM
+* Software: an R script write by ourselves (merge.R)
+* Input data: sample list, the directory paths of the potential transcripts count and FPKM
+* Commands:
+```
+input_file=sample_list.txt
+input_dir1=${outdir}/stringtie
+input_dir2=${outdir}/FPKM
+output_dir=${outdir}/gene_expression_result
+mkdir -p ${output_dir}
+Rscript merge.R -i ${input_file} -c ${input_dir1} -f ${input_dir2} -o ${output_dir}/gene_expression_result.txt
+```
 
 ## 4. Quality assessment
 
