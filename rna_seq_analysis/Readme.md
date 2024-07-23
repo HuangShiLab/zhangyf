@@ -128,3 +128,14 @@ Rscript merge.R -i ${input_file} -c ${input_dir1} -f ${input_dir2} -o ${output_d
 ```
 
 ## 4. Differentially expressed genes (DEGs) analysis
+* Software: an R script write by ourselves (differential_analysis.R) based on the crossRanger package
+* Input data: the results of potential transcripts count and FPKM, the meta data of samples
+* Commands:
+```
+input_dir=${outdir}/gene_expression_result
+input_file=metadata.txt
+output_dir=${outdir}/Differentially_expressed_genes
+mkdir -p ${output_dir}
+Rscript differential_analysis.R -i ${input_dir}/gene_expression_result.txt -m ${input_file} -o ${output_dir}
+```
+
