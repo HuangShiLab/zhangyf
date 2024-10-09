@@ -22,7 +22,7 @@ The main workflow of transcriptome data analysis contains five steps.
 ```
 output_dir=${outdir}/fastqc
 mkdir -p ${output_dir}
-fastqc -o "$output_dir" "$input_file1" "$input_file2"
+fastqc ${input_file1} ${input_file2} -o ${output_dir}
 ```
 
 1.2 Data Filtering  
@@ -91,19 +91,7 @@ output_dir=${outdir}/stringtie
 stringtie -p 8 -o ${output_dir}/${sample_name}_assembled_transcripts.gtf ${input_dir}/${sample_name}_sorted.bam
 ```
 
-3.3 Assemble RNA-Seq alignments into potential transcripts
-* Software: HTSeq 2.0.7  
-* Input data: sorted sam file; assembled transcripts file in gtf format  
-* Commands:  
-```
-input_dir1=${outdir}/bowtie2
-input_dir2=${outdir}/stringtie
-output_dir=${outdir}/gene_expression_count
-mkdir -p ${output_dir}
-htseq-count -f bam -s no -r pos ${input_dir1}/${sample_name}_sorted.sam ${input_dir2}/${sample_name}_assembled_transcripts.gtf > ${output_dir}/${sample_name}_counts.txt
-```
-
-3.4 Manage the FPKM results
+3.3 Manage the FPKM results
 * Software: a python script write by ourselves (FPKM.py)
 * Input data: assembled transcripts file in gtf format
 * Commands:
@@ -114,7 +102,7 @@ mkdir -p ${output_dir}
 python FPKM.py ${inputdir}/${sample_name}_assembled_transcripts.gtf ${output_dir}/${sample_name}_FPKM.txt
 ```
 
-3.5 Merge the results of potential transcripts count and FPKM
+3.4 Merge the results of potential transcripts count and FPKM
 * Software: an R script write by ourselves (merge.R)
 * Input data: sample list, the directory paths of the potential transcripts count and FPKM
 * Commands:
